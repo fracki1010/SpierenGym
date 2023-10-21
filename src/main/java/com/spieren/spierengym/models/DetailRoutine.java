@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class DetailRoutine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -14,11 +15,17 @@ public class DetailRoutine {
     private int repeat;
     private int weight;
     private int series;
-    @OneToMany(mappedBy = "detailRoutine", fetch = FetchType.EAGER)
-    private Set<Routine> routines = new HashSet<>();
 
-    @OneToMany(mappedBy = "detailRountine", fetch = FetchType.EAGER)
-    private Set<Exercise> exercises = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "routine_id")
+    private Routine routine;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exercise_id")
+    private Exercise exercise;
+
+    public DetailRoutine() {
+    }
 
     public DetailRoutine(int repeat, int weight, int series) {
         this.repeat = repeat;
@@ -53,4 +60,23 @@ public class DetailRoutine {
     public void setSeries(int series) {
         this.series = series;
     }
+
+    public Routine getRoutine() {
+        return routine;
+    }
+
+    public void setRoutine(Routine routine) {
+        this.routine = routine;
+    }
+
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
+
+
 }

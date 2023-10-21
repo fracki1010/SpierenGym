@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Routine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -16,12 +17,15 @@ public class Routine {
     private String creator;
     private String objective;
     private Dificulty dificulty;
+
     @OneToMany(mappedBy = "routine")
     private Set<Activity> activities = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "detailRoutine_id")
-    private DetailRoutine detailRoutine;
+    @OneToMany(mappedBy = "routine", fetch = FetchType.EAGER)
+    private Set<DetailRoutine> detailRoutines = new HashSet<>();
+
+    public Routine() {
+    }
 
     public Routine(String name, String description, String creator, String objective, Dificulty dificulty) {
         this.name = name;
@@ -73,5 +77,31 @@ public class Routine {
 
     public void setDificulty(Dificulty dificulty) {
         this.dificulty = dificulty;
+    }
+
+    public Set<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(Set<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public Set<DetailRoutine> getDetailRoutines() {
+        return detailRoutines;
+    }
+
+    public void setDetailRoutines(Set<DetailRoutine> detailRoutines) {
+        this.detailRoutines = detailRoutines;
+    }
+
+    public void addActivity(Activity activity) {
+        activity.setRoutine(this);
+        activities.add(activity);
+    }
+
+    public void addDetailRoutine(DetailRoutine detailRoutine) {
+        detailRoutine.setRoutine(this);
+        detailRoutines.add(detailRoutine);
     }
 }

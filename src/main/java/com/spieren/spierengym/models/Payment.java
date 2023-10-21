@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -18,6 +19,9 @@ public class Payment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
+
+    public Payment() {
+    }
 
     public Payment(PaymentMethod paymentMethod, LocalDate paymentDate, boolean paymentStatus, Double amount) {
         this.paymentMethod = paymentMethod;
@@ -60,5 +64,14 @@ public class Payment {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

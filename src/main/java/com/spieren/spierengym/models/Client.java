@@ -26,6 +26,9 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Activity> activities = new HashSet<>();
 
+    public Client() {
+    }
+
     public Client(String firstName, String lastName, String email, String address, LocalDate date, LocalDate birthDate, LocalDate startDate) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -94,5 +97,32 @@ public class Client {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public Set<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(Set<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public void addPayment(Payment payment){
+        //Decirle a la payment quien es su dueño
+        payment.setClient(this);
+        payments.add(payment);
+    }
+
+    public void addActivity(Activity activity){
+        activity.setClient(this);
+        activities.add(activity);
     }
 }

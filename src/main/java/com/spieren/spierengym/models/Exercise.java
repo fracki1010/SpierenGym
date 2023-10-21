@@ -3,7 +3,10 @@ package com.spieren.spierengym.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -13,9 +16,13 @@ public class Exercise {
     private String description;
     private String instructions;
     private MuscleGroup muscleGroup ;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "detailRoutine_id")
-    private DetailRoutine detailRoutine;
+
+    @OneToMany(mappedBy = "exercise", fetch = FetchType.EAGER)
+    private Set<DetailRoutine> detailRoutines = new HashSet<>();
+
+
+    public Exercise() {
+    }
 
     public Exercise(String name, String description, String instructions, MuscleGroup muscleGroup) {
         this.name = name;
@@ -58,5 +65,18 @@ public class Exercise {
 
     public void setMuscleGroup(MuscleGroup muscleGroup) {
         this.muscleGroup = muscleGroup;
+    }
+
+    public Set<DetailRoutine> getDetailRoutines() {
+        return detailRoutines;
+    }
+
+    public void setDetailRoutines(Set<DetailRoutine> detailRoutines) {
+        this.detailRoutines = detailRoutines;
+    }
+
+    public void addDetailRoutine(DetailRoutine detailRoutine) {
+        detailRoutine.setExercise(this);
+        detailRoutines.add(detailRoutine);
     }
 }
