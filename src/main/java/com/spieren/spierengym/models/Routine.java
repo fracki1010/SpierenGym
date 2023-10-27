@@ -1,5 +1,6 @@
 package com.spieren.spierengym.models;
 
+import com.spieren.spierengym.dtos.RoutineDTO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,11 +19,12 @@ public class Routine {
     private String objective;
     private Dificulty dificulty;
 
-    @OneToMany(mappedBy = "routine")
-    private Set<Activity> activities = new HashSet<>();
 
     @OneToMany(mappedBy = "routine", fetch = FetchType.EAGER)
-    private Set<DetailRoutine> detailRoutines = new HashSet<>();
+    private Set<Exercise> exercises = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     public Routine() {
     }
@@ -79,29 +81,29 @@ public class Routine {
         this.dificulty = dificulty;
     }
 
-    public Set<Activity> getActivities() {
-        return activities;
+    public Set<Exercise> getExercises() {
+        return exercises;
     }
 
-    public void setActivities(Set<Activity> activities) {
-        this.activities = activities;
+    public void setExercises(Set<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
-    public Set<DetailRoutine> getDetailRoutines() {
-        return detailRoutines;
+    public Client getClient() {
+        return client;
     }
 
-    public void setDetailRoutines(Set<DetailRoutine> detailRoutines) {
-        this.detailRoutines = detailRoutines;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public void addActivity(Activity activity) {
-        activity.setRoutine(this);
-        activities.add(activity);
+    public void addExercise(Exercise exercise) {
+        exercise.setRoutine(this);
+        exercises.add(exercise);
     }
 
-    public void addDetailRoutine(DetailRoutine detailRoutine) {
-        detailRoutine.setRoutine(this);
-        detailRoutines.add(detailRoutine);
+    public void removeExercise(Exercise exercise) {
+        exercise.setRoutine(null);
+        exercises.remove(exercise);
     }
 }

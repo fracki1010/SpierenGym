@@ -15,28 +15,32 @@ public class Client {
     private Long id;
     private String firstName;
     private String lastName;
+    private String dni;
     private String email;
-    private String address;
-    private LocalDate date;
+    private String password;
     private LocalDate birthDate;
     private LocalDate startDate;
+    private String shift;
+    private RolType rol;
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Payment> payments = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    private Set<Activity> activities = new HashSet<>();
+    private Set<Routine> routines = new HashSet<>();
 
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String email, String address, LocalDate date, LocalDate birthDate, LocalDate startDate) {
+    public Client(String firstName, String lastName, String dni, String email, String password, LocalDate birthDate, LocalDate startDate, String shift, RolType rol) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dni = dni;
         this.email = email;
-        this.address = address;
-        this.date = date;
+        this.password = password;
         this.birthDate = birthDate;
         this.startDate = startDate;
+        this.shift = shift;
+        this.rol = rol;
     }
 
     public Long getId() {
@@ -67,22 +71,6 @@ public class Client {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -107,12 +95,45 @@ public class Client {
         this.payments = payments;
     }
 
-    public Set<Activity> getActivities() {
-        return activities;
+    public Set<Routine> getRoutines() {
+        return routines;
     }
 
-    public void setActivities(Set<Activity> activities) {
-        this.activities = activities;
+    public void setRoutines(Set<Routine> routines) {
+        this.routines = routines;
+    }
+
+    public String getPassword() {
+
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getShift() {
+        return shift;
+    }
+
+    public void setShift(String shift) {
+        this.shift = shift;
+    }
+
+    public RolType getRol() {
+        return rol;
+    }
+
+    public void setRol(RolType rol) {
+        this.rol = rol;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public void addPayment(Payment payment){
@@ -121,8 +142,12 @@ public class Client {
         payments.add(payment);
     }
 
-    public void addActivity(Activity activity){
-        activity.setClient(this);
-        activities.add(activity);
+    public void removePayment(Payment payment){
+        payments.remove(payment);
+    }
+
+    public void addRoutine(Routine routine){
+        routine.setClient(this);
+        routines.add(routine);
     }
 }

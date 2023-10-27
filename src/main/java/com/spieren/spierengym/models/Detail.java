@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class DetailRoutine {
+public class Detail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name="native", strategy = "native")
@@ -16,18 +16,15 @@ public class DetailRoutine {
     private int weight;
     private int series;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "routine_id")
-    private Routine routine;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
-    public DetailRoutine() {
+    public Detail() {
     }
 
-    public DetailRoutine(int repeat, int weight, int series) {
+    public Detail(int repeat, int weight, int series) {
         this.repeat = repeat;
         this.weight = weight;
         this.series = series;
@@ -61,14 +58,6 @@ public class DetailRoutine {
         this.series = series;
     }
 
-    public Routine getRoutine() {
-        return routine;
-    }
-
-    public void setRoutine(Routine routine) {
-        this.routine = routine;
-    }
-
     public Exercise getExercise() {
         return exercise;
     }
@@ -76,7 +65,4 @@ public class DetailRoutine {
     public void setExercise(Exercise exercise) {
         this.exercise = exercise;
     }
-
-
-
 }

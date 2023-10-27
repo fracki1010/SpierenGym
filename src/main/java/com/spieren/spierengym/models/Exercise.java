@@ -17,14 +17,18 @@ public class Exercise {
     private String instructions;
     private MuscleGroup muscleGroup ;
 
-    @OneToMany(mappedBy = "exercise", fetch = FetchType.EAGER)
-    private Set<DetailRoutine> detailRoutines = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "routine_id")
+    private Routine routine;
 
+    @OneToMany(mappedBy = "exercise", fetch = FetchType.EAGER)
+    private Set<Detail> details = new HashSet<>();
 
     public Exercise() {
     }
 
-    public Exercise(String name, String description, String instructions, MuscleGroup muscleGroup) {
+    public Exercise(String name, String description, String instructions,
+                    MuscleGroup muscleGroup) {
         this.name = name;
         this.description = description;
         this.instructions = instructions;
@@ -67,16 +71,24 @@ public class Exercise {
         this.muscleGroup = muscleGroup;
     }
 
-    public Set<DetailRoutine> getDetailRoutines() {
-        return detailRoutines;
+    public Routine getRoutine() {
+        return routine;
     }
 
-    public void setDetailRoutines(Set<DetailRoutine> detailRoutines) {
-        this.detailRoutines = detailRoutines;
+    public void setRoutine(Routine routine) {
+        this.routine = routine;
     }
 
-    public void addDetailRoutine(DetailRoutine detailRoutine) {
-        detailRoutine.setExercise(this);
-        detailRoutines.add(detailRoutine);
+    public Set<Detail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Set<Detail> details) {
+        this.details = details;
+    }
+
+    public void addDetail(Detail detail) {
+        detail.setExercise(this);
+        details.add(detail);
     }
 }
