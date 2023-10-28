@@ -1,0 +1,28 @@
+.expanding-element {
+    transition: max-height 0.10s;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.expanding-element.expanded {
+    max-height: 1000px;
+    /* Altura máxima para mostrar todo el contenido */
+}
+
+.exercise-container {
+    height: 500px;
+}
+
+.exercise-font {
+    background-color: rgb(240, 240, 240);
+    margin-bottom: 2rem;
+}
+
+.square-image {
+    height: 6rem;
+    /* Establece la altura deseada (4rem) */
+    width: 100%;
+    /* Establece el ancho al 100% */
+    object-fit: cover;
+    /* Opcional: Escala la imagen para llenar el espacio disponible */
+}

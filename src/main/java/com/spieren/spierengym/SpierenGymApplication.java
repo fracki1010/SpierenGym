@@ -30,8 +30,8 @@ public class SpierenGymApplication {
 			//----------------------------------
 
 			//Creacion de clientes
-			Client client1 = new Client("Franco", "Galdame", "42793845", "franco23@gmail.com", passwordEncoder.encode("123"), LocalDate.of(2000,07, 05), LocalDate.now(), "9:00", RolType.CLIENT);
-			Client client2 = new Client("Marcos", "Gomez","25362967","marcos@gmail.com", passwordEncoder.encode("123"), LocalDate.of(2001,12, 20), LocalDate.now(), "9:00", RolType.CLIENT);
+			Client client1 = new Client("Franco", "Galdame", "42793845", "2622517447", Gender.MALE, "franco23@gmail.com", passwordEncoder.encode("123"), LocalDate.of(2000,07, 05), LocalDate.now(), "9:00", RolType.CLIENT);
+			Client client2 = new Client("Marcos", "Gomez","25362967", "2622522358", Gender.MALE,"marcos@gmail.com", passwordEncoder.encode("123"), LocalDate.of(2001,12, 20), LocalDate.now(), "9:00", RolType.CLIENT);
 
 			//Guardar clientes
 			clientRepository.save(client1);

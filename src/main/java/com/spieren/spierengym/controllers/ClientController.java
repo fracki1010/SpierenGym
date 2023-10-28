@@ -2,6 +2,7 @@ package com.spieren.spierengym.controllers;
 
 import com.spieren.spierengym.dtos.ClientDTO;
 import com.spieren.spierengym.models.Client;
+import com.spieren.spierengym.models.Gender;
 import com.spieren.spierengym.models.RolType;
 import com.spieren.spierengym.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,10 @@ public class ClientController {
     @PostMapping("/clients")
     public ResponseEntity<Object> register(String firstName, String lastName,
                                            String email, String password, RolType rolType,
-                                           String dni, String birthdate, String shift
-                                            , Authentication authentication){
+                                           String dni, String birthdate, String phone,
+                                           Gender gender, Authentication authentication){
 
-        if (firstName.isBlank() || lastName.isBlank()||email.isBlank()||password.isBlank() || dni.isBlank() || birthdate.isBlank()){
+        if (firstName.isBlank() || lastName.isBlank()||email.isBlank()||password.isBlank() || dni.isBlank() || birthdate.isBlank() || phone.isBlank()){
             return new ResponseEntity<>("Por favor completa todo los datos", HttpStatus.FORBIDDEN);
         }
 
@@ -58,6 +59,16 @@ public class ClientController {
         //Verifica que el dni sea unico en la base de datos
         if (clientRepository.existsByDni(dni)){
             return new ResponseEntity<>("Esta persona ya esta registrada", HttpStatus.FORBIDDEN);
+        }
+
+        //Verifica que el numero de celular no exista en la base de datos
+        if (clientRepository.existsByPhone(phone)){
+            return new ResponseEntity<>("Este número ya existe", HttpStatus.FORBIDDEN);
+        }
+
+        //Verifica que el campo genero no este vacio
+        if (gender == Gender.NONE){
+            return new ResponseEntity<>("Complete el campo de genero", HttpStatus.FORBIDDEN);
         }
 
         //Asignación de rol
@@ -75,7 +86,7 @@ public class ClientController {
         }
 
         //Identificaion del clinte
-        Client client = new Client(firstName,lastName, dni, email, passwordEncoder.encode(password),birthdateChange, LocalDate.now(), shift, rolType);
+        Client client = new Client(firstName,lastName, dni, phone, gender, email, passwordEncoder.encode(password),birthdateChange, LocalDate.now(), "no asignado", rolType);
 
         //Guardado de cliente
         clientRepository.save(client);
@@ -85,4 +96,9 @@ public class ClientController {
         return new ResponseEntity<>("Cliente registrado exitosamente",HttpStatus.CREATED);
     }
 
+    @GetMapping("/clients/current")
+    public ClientDTO getClientCurrent(Authentication authentication){
+        Client client = clientRepository.findByEmail(authentication.getName());
+        return new ClientDTO(client);
+    }
 }

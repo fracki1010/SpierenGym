@@ -2,8 +2,6 @@ package com.spieren.spierengym.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,19 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @EnableWebSecurity
-
 @Configuration
-public class WebAuthorization{
+public class WebAuthorization {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/web/index.html","/web/js/index.js", "/web/styles/index.css",
+                .antMatchers("/web/**").permitAll()
+                .antMatchers("/api/**").permitAll();
+                /*.antMatchers("/web/index.html","/web/js/index.js", "/web/styles/index.css",
                         "/web/img/**").permitAll()
                 .antMatchers("/js/**","/style/**").hasAuthority("CLIENT")
-                .antMatchers("/web/exercises.html").hasAuthority("CLIENT")
-                .antMatchers("/**").hasAuthority("ADMIN");
+                .antMatchers("/web/exercises.html").hasAuthority("CLIENT");*/
 
         http.formLogin()
                 .usernameParameter("email")

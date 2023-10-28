@@ -14,12 +14,18 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+
 class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
+
+
+
     @Autowired
     ClientRepository clientRepository;
 
 
+
     @Override
+
     public void init(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(inputName-> {
@@ -46,4 +52,3 @@ class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
-

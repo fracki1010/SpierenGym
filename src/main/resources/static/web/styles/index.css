@@ -1,0 +1,11 @@
+.custom-div {
+    background-color: azure;
+    opacity: 0.7; /* Valor entre 0 (completamente transparente) y 1 (completamente opaco) */
+    padding: 20px;
+}
+
+#contenido{
+    background-color: transparent; /* Fondo transparente */
+    min-height: 100vh; /* Altura mínima igual a la altura de la ventana gráfica */
+    position: relative; /* Asegura que el contenido se superponga sobre el fondo */
+}

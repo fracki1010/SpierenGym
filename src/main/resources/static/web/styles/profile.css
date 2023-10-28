@@ -1,0 +1,16 @@
+.menu_Toggle{
+    background-color: rgb(24, 200, 235);
+}
+
+/* repetido */
+.bordered-text {
+    -webkit-text-stroke: 0.5px black; /* Borde de 2 píxeles de ancho y color rojo */
+    font-family: fantasy;
+    font-weight: 800;
+    color: white; /* Color del texto interior (dentro del borde) */
+    font-size: 1.5rem;
+}
+
+.payment-container{
+    background-color: rgb(190, 213, 232);
+}

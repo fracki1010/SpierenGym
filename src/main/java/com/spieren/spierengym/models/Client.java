@@ -16,6 +16,8 @@ public class Client {
     private String firstName;
     private String lastName;
     private String dni;
+    private String phone;
+    private Gender gender;
     private String email;
     private String password;
     private LocalDate birthDate;
@@ -31,11 +33,13 @@ public class Client {
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String dni, String email, String password, LocalDate birthDate, LocalDate startDate, String shift, RolType rol) {
+    public Client(String firstName, String lastName, String dni, String phone, Gender gender, String email, String password, LocalDate birthDate, LocalDate startDate, String shift, RolType rol) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dni = dni;
         this.email = email;
+        this.phone = phone;
+        this.gender = gender;
         this.password = password;
         this.birthDate = birthDate;
         this.startDate = startDate;
@@ -134,6 +138,22 @@ public class Client {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public void addPayment(Payment payment){

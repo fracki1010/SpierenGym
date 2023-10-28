@@ -18,120 +18,152 @@
 
 <body>
   <div id="app">
-    <!-- <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem;">
-            <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-              <img class="bi" width="50" height="40" src="img/logo.png" alt="">
-              
-            </a>
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-              <li class="nav-item">
-                <a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                  <i class="fa-solid fa-house fa-xl"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                    <i class="fa-solid fa-border-all fa-2xl"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                    <i class="fa-solid fa-dumbbell fa-2xl"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-                  <svg class="bi" width="24" height="24" role="img" aria-label="Products"><use xlink:href="#grid"></use></svg>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
-                  <svg class="bi" width="24" height="24" role="img" aria-label="Customers"><use xlink:href="#people-circle"></use></svg>
-                </a>
-              </li>
-            </ul>
-            <div class="dropdown border-top">
-              <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
-              </a>
-              <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3" style="">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-              </ul>
-            </div>
-          </div> -->
     <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-primary">
       <ul class="navbar-nav nav-fill w-100">
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-stopwatch-20 fa-2xl"></i></a>
+          <a class="nav-link active" href="/web/exercises.html"><i class="fa-solid fa-stopwatch-20 fa-2xl"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-dumbbell fa-2xl"></i></a>
+          <a class="nav-link" href="/web/routine.html"><i class="fa-solid fa-dumbbell fa-2xl"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-ranking-star fa-2xl"></i></a>
+          <a class="nav-link" href="/web/ranking.html"><i class="fa-solid fa-ranking-star fa-2xl"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-user fa-2xl"></i></a>
+          <a class="nav-link" href="/web/profile.html"><i class="fa-solid fa-user fa-2xl"></i></a>
         </li>
       </ul>
     </nav>
-    <div class="p-3">
-      <h3 class="position-fixed top-0 end-0 p-2 bg-primary text-white font-monospace">HYPERTROFIA</h3>
+    <div class="p-3 mb-5">
+      <h3 class="position-fixed top-0 end-0 p-2 bg-primary text-white font-monospace" style="z-index: 1;">HYPERTROFIA</h3>
       <div class="col">
         <p class="d-flex justify-content-center mt-5">
           <span class="border-bottom mb-3 border-info ">Ejercicios de hoy</span>
         </p>
       </div>
-      <div class="col rounded rounded-3 bg-warning p-2 mb-3">
+
+      <!-- card de Ejercicios -->
+      <div class="card exercise-font">
+        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+          <img src="img/press-de-banca.jpg" class="img-fluid rounded-top square-image"/>
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Press de Banca</h5>
+          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
+          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+        </div>
+      </div>
+
+      <div class="card exercise-font">
+        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+          <img src="img/triceps-polea.jpg" class="img-fluid rounded-top square-image"/>
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Tricep Polea</h5>
+          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
+          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+        </div>
+      </div>
+
+      <div class="card exercise-font">
+        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+          <img src="img/press-banco-inclinado.jpg" class="img-fluid rounded-top square-image"/>
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Press Banco Inclinado</h5>
+          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
+          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+        </div>
+      </div>
+
+
+      <div class="card exercise-font">
+        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+          <img src="img/press-frances.jpg" class="img-fluid rounded-top square-image"/>
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Press Frances</h5>
+          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
+          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+        </div>
+      </div>
+
+
+      <div class="card exercise-font">
+        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+          <img src="img/peso-muerto.jpg" class="img-fluid rounded-top square-image"/>
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Peso Muerto</h5>
+          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
+          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+        </div>
+      </div>
+
+
+      <div class="card exercise-font">
+        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+          <img src="img/sentadilla.jpg" class="img-fluid rounded-top square-image"/>
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Sentadilla</h5>
+          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
+          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+        </div>
+      </div>
+
+
+      <!-- <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
         <div class="col">
-          <p>Press de banca</p>
+          <p class="fs-3 fw-bolder">Press de banca</p>
+        </div>
+        <div class="col ">
+          <p>4 series || 12 repeticiones</p>
+        </div>
+      </div>
+      <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
+        <div class="col">
+          <p class="fs-3 fw-bolder">Press de banca</p>
         </div>
         <div class="col">
           <p>4 series || 12 repeticiones</p>
         </div>
       </div>
-      <div class="col rounded rounded-3 bg-warning p-2 mb-3">
+      <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
         <div class="col">
-          <p>Press de banca</p>
+          <p class="fs-3 fw-bolder">Press de banca</p>
         </div>
         <div class="col">
           <p>4 series || 12 repeticiones</p>
         </div>
       </div>
-      <div class="col rounded rounded-3 bg-warning p-2 mb-3">
+      <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
         <div class="col">
-          <p>Press de banca</p>
+          <p class="fs-3 fw-bolder">Press de banca</p>
         </div>
         <div class="col">
           <p>4 series || 12 repeticiones</p>
         </div>
-      </div>
-      <div class="col rounded rounded-3 bg-warning p-2 mb-3">
-        <div class="col">
-          <p>Press de banca</p>
-        </div>
-        <div class="col">
-          <p>4 series || 12 repeticiones</p>
-        </div>
-      </div>
+      </div> -->
     </div>
-
-  
-
-    <div class="p-4 mt-4">
-      <div @click="showExercise" class="row text-decoration-none p-3 bg-danger">EJERCICIO<div/>
-        <template v-if="isExpanded">
-          <div class="bg-danger p-3">
-            Movete asi asi asi
-          </div>
-        </template>
-      </div>
-    </div>
-
 
 
 

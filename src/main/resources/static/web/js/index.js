@@ -1,6 +1,4 @@
-const {createApp} = Vue
-
-const app = createApp({
+Vue.createApp({
     data(){
         return{
             email: "",
@@ -9,7 +7,8 @@ const app = createApp({
             lastName: "",
             dni: "",
             birthdate: "",
-            cuil: "",
+            phone: "",
+            gender: "none",
             btnSignInActive: true,
             errorToats: null,
             errorMsg:"",
@@ -37,13 +36,13 @@ const app = createApp({
                     }
                   })
                 .catch(() => {
-                    this.errorMsg = "Sign in failed, check the information"
+                    this.errorMsg = "Error en inicio de sesion, verifique la informacion"
                     this.errorToats.show();
                 })
         },
 
         //Registrar un cliente nuevo
-        /*register: function (event) {
+        register: function (event) {
                     this.btnSignInActive = false;
                     event.preventDefault();
                     let config = {
@@ -51,7 +50,7 @@ const app = createApp({
                             'content-type': 'application/x-www-form-urlencoded'
                         }
                     }
-                    axios.post('/api/clients', `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}&rolType=CLIENT&dni=${this.dni}&birthdate=${this.birthdate}&cuil=${this.cuil}`, config)
+                    axios.post('/api/clients', `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}&rolType=CLIENT&dni=${this.dni}&birthdate=${this.birthdate}&phone=${this.phone}&gender=${this.gender}`, config)
                         .then(() => {
                             this.logIn(event)
                             this.errorMsg = response.text();
@@ -69,12 +68,19 @@ const app = createApp({
                                 this.errorToats.show();
                               }
                             }
-                        })*/
-                        /*.catch(() => {
+                        })
+                        /* .catch(() => {
                             this.errorMsg = response.text();
                             this.errorToats.show();
-                        })
-        },*/
+                        }) */
+        },
+        chargeData: function (){
+            if(this.gender == "none"){
+                this.errorMsg = "Campo de genero vacio"
+                this.errorMsg.show
+                return "error"
+            }
+        },
         showSignUpToogle: function () {
                     this.showSignUp = !this.showSignUp;
         },
