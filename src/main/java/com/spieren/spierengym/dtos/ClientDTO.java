@@ -18,7 +18,6 @@ public class ClientDTO {
     private String lastName;
     private String dni;
     private String email;
-    private String password;
     private String phone;
     private Gender gender;
     private LocalDate birthDate;
@@ -27,7 +26,8 @@ public class ClientDTO {
     private String shift;
     private RolType rol;
     private Set<PaymentDTO> payments = new HashSet<>();
-    private Set<RoutineDTO> routines;
+    private Set<RoutineDTO> routines = new HashSet<>();
+    private Set<WeightMaxDTO> weightMaxs = new HashSet<>();
 
 
     public ClientDTO(Client client) {
@@ -38,7 +38,6 @@ public class ClientDTO {
         this.phone = client.getPhone();
         this.gender = client.getGender();
         this.email = client.getEmail();
-        this.password = client.getPassword();
         this.birthDate = client.getBirthDate();
         this.age = Period.between(client.getBirthDate(), LocalDate.now()).getYears();
         this.startDate = client.getStartDate();
@@ -52,6 +51,10 @@ public class ClientDTO {
                               .stream()
                               .map(routine -> new RoutineDTO(routine))
                               .collect(Collectors.toSet());
+        this.weightMaxs = client.getWeightMaxs()
+                                .stream()
+                                .map(weightMax -> new WeightMaxDTO(weightMax))
+                                .collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -78,10 +81,6 @@ public class ClientDTO {
         return startDate;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getShift() {
         return shift;
     }
@@ -102,11 +101,19 @@ public class ClientDTO {
         return gender;
     }
 
+    public int getAge() {
+        return age;
+    }
+
     public Set<PaymentDTO> getPayments() {
         return payments;
     }
 
     public Set<RoutineDTO> getRoutines() {
         return routines;
+    }
+
+    public Set<WeightMaxDTO> getWeightMaxs() {
+        return weightMaxs;
     }
 }

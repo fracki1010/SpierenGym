@@ -2,6 +2,8 @@ Vue.createApp({
     data(){
         return{
             clientInfo: [],
+            routine: [],
+            payments: {},
             errorMsg: "",
             errorToats: null
         }
@@ -15,12 +17,18 @@ Vue.createApp({
                 .then((response) => {
                     //obtiene los datos del cliente actual y autenticado
                     this.clientInfo = response.data;
+                    this.routine = this.clientInfo.routines[0].name;
+                    this.payments = this.clientInfo.payments;
+
                 })
                 .catch((error) => {
                     // Por si no hay un cliente autenticado y no obtiene nada
                     this.errorMsg = "Error al obtener los datos del cliente";
                     this.errorToats.show();
                 })
+       },
+       formatDate: function (date) {
+           return new Date(date).toLocaleDateString('en-gb');
        },
        signOut: function () {
            axios.post('/api/logout')
@@ -30,6 +38,9 @@ Vue.createApp({
                    this.errorToats.show();
                })
        },
+       prueba: function (){
+            console.log(this.payments);
+       }
     },
     mounted: function () {
             this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));

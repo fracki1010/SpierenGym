@@ -1,0 +1,14 @@
+.border-card{
+    background-color:lightslategray;
+    border-radius: 1rem;
+}
+
+.card-client{
+    text-align: center;
+}
+
+.card-client:hover{
+    transition: 0.6s;
+    font-size: 1.3rem;
+    background-color: #17a2b899;
+}

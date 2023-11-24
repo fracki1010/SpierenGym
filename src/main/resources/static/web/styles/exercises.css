@@ -1,3 +1,15 @@
+.card-add:hover{
+    transition: 0.5s;
+    background-color: rgba(0, 123, 255, 0.507);
+    border: 1px solid #0592a8; /* Cambia el color según tus necesidades */
+    
+}
+
+.card-add{
+    background-color: rgba(0, 123, 255, 0.1);
+    border: 1px solid #17a2b8; /* Cambia el color según tus necesidades */
+}
+
 .expanding-element {
     transition: max-height 0.10s;
     max-height: 0;

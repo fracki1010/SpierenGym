@@ -17,7 +17,6 @@ public class Routine {
     private String description;
     private String creator;
     private String objective;
-    private Dificulty dificulty;
 
 
     @OneToMany(mappedBy = "routine", fetch = FetchType.EAGER)
@@ -29,12 +28,11 @@ public class Routine {
     public Routine() {
     }
 
-    public Routine(String name, String description, String creator, String objective, Dificulty dificulty) {
+    public Routine(String name, String description, String creator, String objective) {
         this.name = name;
         this.description = description;
         this.creator = creator;
         this.objective = objective;
-        this.dificulty = dificulty;
     }
 
     public Long getId() {
@@ -71,14 +69,6 @@ public class Routine {
 
     public void setObjective(String objective) {
         this.objective = objective;
-    }
-
-    public Dificulty getDificulty() {
-        return dificulty;
-    }
-
-    public void setDificulty(Dificulty dificulty) {
-        this.dificulty = dificulty;
     }
 
     public Set<Exercise> getExercises() {

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gim</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+  <script src="https://kit.fontawesome.com/3f4db2cda2.js" crossorigin="anonymous"></script>
+  <!--jQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="styles/ranking.css">
+</head>
+
+<body>
+  <div id="app">
+    <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-primary">
+      <ul class="navbar-nav nav-fill w-100">
+        <li class="nav-item">
+          <a class="nav-link" href="/web/exercises.html"><i class="fa-solid fa-stopwatch-20 fa-2xl"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/web/routine.html"><i class="fa-solid fa-dumbbell fa-2xl"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/web/rankings.html"><i class="fa-solid fa-ranking-star fa-2xl"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/web/profile.html"><i class="fa-solid fa-user fa-2xl"></i></a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="p-3">
+      <div class="col">
+        <p class="d-flex justify-content-center mt-5">
+          <span class="border-bottom border-4 mb-3 border-danger ">Ultimo ranking del mes</span>
+        </p>
+      </div>
+      <template v-for="ranking in rankings">
+        <div @click="redirectWindow(ranking.id)" class="col rounded rounded-3 p-2 mb-4 h-100" :style="['background-image: url(' + ranking.image + ');',
+                                                                    'background-repeat: no-repeat;',
+                                                                    'background-size: cover;',
+                                                                    'background-position: center;']">
+          <div class="col">
+            <p class="bordered-text">{{ranking.name.toUpperCase()}}</p>
+          </div>
+        </div>
+      </template>
+    </div>
+
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+    crossorigin="anonymous"></script>
+  <script src="js/rankings.js"></script>
+</body>
+
+</html>

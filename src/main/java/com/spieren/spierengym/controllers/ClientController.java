@@ -3,17 +3,16 @@ package com.spieren.spierengym.controllers;
 import com.spieren.spierengym.dtos.ClientDTO;
 import com.spieren.spierengym.models.Client;
 import com.spieren.spierengym.models.Gender;
+import com.spieren.spierengym.models.Payment;
 import com.spieren.spierengym.models.RolType;
 import com.spieren.spierengym.repositories.ClientRepository;
+import com.spieren.spierengym.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -32,6 +31,9 @@ public class ClientController {
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    PaymentRepository paymentRepository;
+
     @GetMapping("/clients")
     public List<ClientDTO> getAllClient() {
         List<ClientDTO> allClients = clientRepository
@@ -40,6 +42,12 @@ public class ClientController {
                                         .map(client -> new ClientDTO(client))
                                         .collect(Collectors.toList());
         return allClients;
+    }
+
+    @GetMapping("/clients/{id}")
+    public ClientDTO getClient(@PathVariable Long id){
+        Client client = clientRepository.findById(id).orElse(null);
+        return new ClientDTO(client);
     }
 
     @PostMapping("/clients")
@@ -53,7 +61,7 @@ public class ClientController {
         }
 
         if(clientRepository.findByEmail(email) !=null){
-            return new ResponseEntity<>("Este nombre de usuario ya fue utilizado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Este email ya fue utilizado", HttpStatus.FORBIDDEN);
         }
 
         //Verifica que el dni sea unico en la base de datos
@@ -90,6 +98,15 @@ public class ClientController {
 
         //Guardado de cliente
         clientRepository.save(client);
+
+        //Creacion de pago del mes
+        Payment payment = new Payment(LocalDate.now().plusMonths(1), false, 3800.0);
+
+        //Asignacion de pago a cliente
+        client.addPayment(payment);
+
+        //Guardar pago
+        paymentRepository.save(payment);
 
         //----------------------------------
 

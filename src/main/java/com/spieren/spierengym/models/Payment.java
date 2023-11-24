@@ -13,6 +13,7 @@ public class Payment {
     private Long id;
     private PaymentMethod paymentMethod;
     private LocalDate paymentDate;
+    private LocalDate paymentDue;
     private boolean paymentStatus;
     private Double amount;
 
@@ -23,10 +24,9 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(PaymentMethod paymentMethod, LocalDate paymentDate, boolean paymentStatus, Double amount) {
-        this.paymentMethod = paymentMethod;
-        this.paymentDate = paymentDate;
+    public Payment(LocalDate paymentDue , boolean paymentStatus, Double amount) {
         this.paymentStatus = paymentStatus;
+        this.paymentDue = paymentDue;
         this.amount = amount;
     }
 
@@ -56,6 +56,14 @@ public class Payment {
 
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
+    }
+
+    public LocalDate getPaymentDue() {
+        return paymentDue;
+    }
+
+    public void setPaymentDue(LocalDate paymentDue) {
+        this.paymentDue = paymentDue;
     }
 
     public Double getAmount() {

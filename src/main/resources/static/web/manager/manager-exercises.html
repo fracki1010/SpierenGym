@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gim</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/3f4db2cda2.js" crossorigin="anonymous"></script>
+    <!--jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" href="../styles/exercises.css">
+</head>
+
+<body>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+<div id="app">
+
+    <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
+        <div id="danger-toast" data-bs-delay="2000" class="toast align-items-center text-white bg-danger border-0"
+             role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ errorMsg }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed-top px-3 py-2 bg-dark border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                    <span class="fs-2 fw-bold">GIM SPIEREN</span>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li>
+                        <a href="manager.html" class="nav-link text-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                <i class="fa-solid fa-house fa-xl" style="width: 30px;"></i>
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager-routines.html" class="nav-link text-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                <i class="fa-solid fa-dumbbell fa-xl" style="width: 30px;"></i>
+                            </svg>
+                            Routine
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager-exercises.html" class="nav-link active text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                <i class="fa-solid fa-stopwatch-20 fa-xl" style="width: 30px;"></i>
+                            </svg>
+                            Exercise
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager-rankings.html" class="nav-link text-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                <i class="fa-solid fa-ranking-star fa-xl" style="width: 30px;"></i>
+                            </svg>
+                            Ranking
+                        </a>
+                    </li>
+                    <li>
+                        <a @click="signOut" href="#" class="nav-link">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                <i class="fa-solid fa-right-from-bracket fa-xl" style="color: gray;"></i>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--Margen que quita el fixed-->
+    <div style="margin-top: 6rem;"></div>
+
+
+    <div class="p-3 mt-5 row d-flex justify-content-center">
+
+        <div data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="card card-add col-5 m-3 p-0">
+            <div class="d-flex justify-content-center align-items-center fs-2 h-100">
+                <i class="fa-solid fa-plus fa-2xl"></i>
+            </div>
+        </div>
+
+        <template v-for="exercise in exercises">
+            <div @click="redirectWindow(exercise.id)" class="card exercise-font col-5 m-3 p-0">
+                <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+                    <img :src="['../' + exercise.img]" class="img-fluid rounded-top square-image"/>
+                    <a href="#">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{exercise.name}}</h5>
+                    <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+                </div>
+            </div>
+
+        </template>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Agregar Ejercicio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text">
+                                Nombre
+                            </div>
+                            <input type="text" class="form-control" aria-label="Text input with checkbox" v-model="name">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-around mb-3">
+                                <input type="radio" class="btn-check" name="muscle" id="btn-chest" v-model="muscle" value="CHEST">
+                                <label class="btn btn-outline-success me-2 ps-5 pe-5" for="btn-chest">Pecho</label>
+
+                                <input type="radio" class="btn-check" name="muscle" id="btn-back" v-model="muscle" value="BACK">
+                                <label class="btn btn-outline-success me-2 ps-5 pe-5" for="btn-back">Espalda</label>
+
+                                <input type="radio" class="btn-check" name="muscle" id="btn-shoulder" v-model="muscle" value="SHOULDER">
+                                <label class="btn btn-outline-success me-2 ps-5 pe-5" for="btn-shoulder">Hombro</label>
+
+                            </div>
+                            <div class="d-flex justify-content-around">
+                                <input type="radio" class="btn-check" name="muscle" id="btn-biceps" v-model="muscle" value="BICEPS">
+                                <label class="btn btn-outline-success me-2 ps-5 pe-5" for="btn-biceps">Biceps</label>
+
+                                <input type="radio" class="btn-check" name="muscle" id="btn-triceps" v-model="muscle" value="TRICEPS">
+                                <label class="btn btn-outline-success me-2 ps-5 pe-5" for="btn-triceps">Triceps</label>
+
+                                <input type="radio" class="btn-check" name="muscle" id="btn-leg" v-model="muscle" value="LEG">
+                                <label class="btn btn-outline-success me-2 ps-5 pe-5" for="btn-leg">Piernas</label>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-text">
+                                Descripcion
+                            </div>
+                            <input type="text" class="form-control" aria-label="Text input with radio button" v-model="description">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-text">
+                                Instrucciones
+                            </div>
+                            <input type="text" class="form-control" aria-label="Text input with radio button" v-model="instruction">
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-3">
+                            <input type="checkbox" class="btn-check" id="btn-monday" v-model="selectedDays" value="MONDAY">
+                            <label class="btn btn-outline-primary me-2" for="btn-monday">Lunes</label>
+
+                            <input type="checkbox" class="btn-check" id="btn-tuesday" v-model="selectedDays" value="TUESDAY">
+                            <label class="btn btn-outline-primary me-2" for="btn-tuesday">Martes</label>
+
+                            <input type="checkbox" class="btn-check" id="btn-wednesday" v-model="selectedDays" value="WEDNESDAY">
+                            <label class="btn btn-outline-primary me-2" for="btn-wednesday">Miércoles</label>
+
+                            <input type="checkbox" class="btn-check" id="btn-thursday" v-model="selectedDays" value="THURSDAY">
+                            <label class="btn btn-outline-primary me-2" for="btn-thursday">Jueves</label>
+
+                            <input type="checkbox" class="btn-check" id="btn-friday" v-model="selectedDays" value="FRIDAY">
+                            <label class="btn btn-outline-primary me-2" for="btn-friday">Viernes</label>
+
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text" for="inputGroupSelect01">Rutina</label>
+                            <select class="form-select" id="inputGroupSelect01" v-model="routineId">
+                                <option selected>Elegir...</option>
+                                <option v-for="routine in routines" :value="routine.id">
+                                    {{ routine.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
+                        <button @click="creationExercise" type="button" class="btn btn-primary">Crear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--------Modal 2------------>
+        <div class="modal fade" id="okModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Creacion de ejercicio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center p-5">
+                        <span class="fs-5 fw-bold me-1">Ejercicio creado con exito!
+                            <i class="fa-solid fa-square-check fa-bounce fa-2xl" style="color: green;"></i>
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="refreshPage">Aceptar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script src="../js/manager-exercises.js"></script>
+</body>
+
+</html>

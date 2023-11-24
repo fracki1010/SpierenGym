@@ -30,6 +30,17 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Routine> routines = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "client_ranking", // Nombre de la tabla de relación
+            joinColumns = @JoinColumn(name = "client_id"), // Columna que hace referencia a Client
+            inverseJoinColumns = @JoinColumn(name = "ranking_id") // Columna que hace referencia a Ranking
+    )
+    private Set<Ranking> rankings = new HashSet<>();
+
+    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
+    private Set<WeightMax> weightMaxs = new HashSet<>();
+
     public Client() {
     }
 
@@ -156,6 +167,22 @@ public class Client {
         this.gender = gender;
     }
 
+    public Set<Ranking> getRankings() {
+        return rankings;
+    }
+
+    public void setRankings(Set<Ranking> rankings) {
+        this.rankings = rankings;
+    }
+
+    public Set<WeightMax> getWeightMaxs() {
+        return weightMaxs;
+    }
+
+    public void setWeightMaxs(Set<WeightMax> weightMaxs) {
+        this.weightMaxs = weightMaxs;
+    }
+
     public void addPayment(Payment payment){
         //Decirle a la payment quien es su dueño
         payment.setClient(this);
@@ -170,4 +197,15 @@ public class Client {
         routine.setClient(this);
         routines.add(routine);
     }
+
+    public void removeRoutine(Routine routine){
+        routines.remove(routine);
+    }
+
+
+    public void addRankingAndClient(Ranking ranking) {
+        rankings.add(ranking);
+        ranking.getClients().add(this);
+    }
+
 }

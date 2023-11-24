@@ -2,8 +2,11 @@ package com.spieren.spierengym.dtos;
 
 import com.spieren.spierengym.models.Exercise;
 import com.spieren.spierengym.models.MuscleGroup;
+import com.spieren.spierengym.models.Weekday;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,7 +16,9 @@ public class ExerciseDTO {
     private String description;
     private String instructions;
     private MuscleGroup muscleGroup ;
-    private Set<DetailDTO> details = new HashSet<>();
+    private List<Weekday> weekdays = new ArrayList<>();
+    private String img;
+    private DetailDTO details;
 
     public ExerciseDTO(Exercise exercise) {
         this.id = exercise.getId();
@@ -21,10 +26,9 @@ public class ExerciseDTO {
         this.name = exercise.getName();
         this.instructions = exercise.getInstructions();
         this.muscleGroup = exercise.getMuscleGroup();
-        this.details = exercise.getDetails()
-                                      .stream()
-                                      .map(detail -> new DetailDTO(detail))
-                                      .collect(Collectors.toSet());
+        this.weekdays = exercise.getWeekdays();
+        this.img = exercise.getImg();
+        this.details = new DetailDTO(exercise.getDetail());
     }
 
     public Long getId() {
@@ -47,7 +51,18 @@ public class ExerciseDTO {
         return muscleGroup;
     }
 
-    public Set<DetailDTO> getDetails() {
+    public List<Weekday> getWeekdays() {
+        return weekdays;
+    }
+
+    public String getImg() {
+        return img;
+    }
+    /*public Set<DetailDTO> getDetails() {
+        return details;
+    }*/
+
+    public DetailDTO getDetails() {
         return details;
     }
 }

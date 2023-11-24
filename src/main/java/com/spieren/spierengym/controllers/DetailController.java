@@ -1,7 +1,7 @@
 package com.spieren.spierengym.controllers;
 
 import com.spieren.spierengym.dtos.DetailDTO;
-import com.spieren.spierengym.repositories.DetailRoutineRepository;
+import com.spieren.spierengym.repositories.DetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 public class DetailController {
 
     @Autowired
-    DetailRoutineRepository detailRoutineRepository;
+    DetailRepository detailRepository;
 
     @GetMapping("/details")
     public Set<DetailDTO> allDetails (){
-        return detailRoutineRepository.findAll()
+        return detailRepository.findAll()
                                       .stream()
                                       .map(detail -> new DetailDTO(detail))
                                       .collect(Collectors.toSet());

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gim</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/3f4db2cda2.js" crossorigin="anonymous"></script>
+    <!--jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles/exercises.css">
+</head>
+
+<body>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+<div id="app">
+
+    <!-- navegador -->
+    <template v-if="clientInfo.rol == 'ADMIN'">
+        <nav class="fixed-top px-3 py-2 bg-dark border-bottom">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                        <span class="fs-2 fw-bold">GIM SPIEREN</span>
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                        <li>
+                            <a href="manager/manager.html" class="nav-link text-secondary">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <i class="fa-solid fa-house fa-xl" style="width: 30px;"></i>
+                                </svg>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="manager/manager-routines.html" class="nav-link text-secondary">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <i class="fa-solid fa-dumbbell fa-xl" style="width: 30px;"></i>
+                                </svg>
+                                Routine
+                            </a>
+                        </li>
+                        <li>
+                            <a href="manager/manager-exercises.html" class="nav-link active text-white">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <i class="fa-solid fa-stopwatch-20 fa-xl" style="width: 30px;"></i>
+                                </svg>
+                                Exercise
+                            </a>
+                        </li>
+                        <li>
+                            <a href="manager/manager-rankings.html" class="nav-link text-secondary">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <i class="fa-solid fa-ranking-star fa-xl" style="width: 30px;"></i>
+                                </svg>
+                                Ranking
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="signOut" href="#" class="nav-link">
+                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                    <i class="fa-solid fa-right-from-bracket fa-xl" style="color: gray;"></i>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!--Margen que quita el fixed-->
+        <div style="margin-top: 6rem;"></div>
+
+    </template>
+    <template v-else>
+        <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-primary">
+            <ul class="navbar-nav nav-fill w-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/exercises.html"><i class="fa-solid fa-stopwatch-20 fa-2xl"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/web/routine.html"><i class="fa-solid fa-dumbbell fa-2xl"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/rankings.html"><i class="fa-solid fa-ranking-star fa-2xl"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/profile.html"><i class="fa-solid fa-user fa-2xl"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </template>
+
+    <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
+        <div id="danger-toast" data-bs-delay="3000" class="toast align-items-center text-white bg-danger border-0"
+             role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ errorMsg }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="p-3">
+        <div class="display-5 p-2 mb-5 fw-bold">INFORMACION</div>
+        <p class="display-6 text-center fw-bold border-bottom border-success">{{ exercise && exercise.name ? exercise.name.toUpperCase() : 'Nombre no disponible' }}
+            <a href="#" @click="edit('Nombre')" v-if="clientInfo.rol === 'ADMIN'">
+                <i class="fa-solid fa-pen-to-square fa-sm" style="color: #003694;"></i>
+            </a>
+        </p>
+        <div class="row d-flex justify-content-around ms-1 me-1">
+            <div class="card border border-primary shadow-0 mb-3 mt-5 p-0 col-lg-5">
+                <div class="card-header d-flex justify-content-between">
+                    <span>Descripción</span>
+                    <a href="#" @click="edit('Descripcion')" v-if="clientInfo.rol === 'ADMIN'">
+                        <i class="fa-solid fa-pen-to-square fa-xl" style="color: #003694;"></i>
+                    </a>
+                </div>
+                <div class="card-body text-primary row d-flex justify-content-around">
+                    <p class="card-text">{{exercise.description}}</p>
+
+                </div>
+            </div>
+
+            <div class="card border border-primary shadow-0 mb-3 mt-5 p-0 col-lg-5">
+                <div class="card-header d-flex justify-content-between">
+                    <span>Instruccion</span>
+                    <a href="#" @click="edit('Instruccion')" v-if="clientInfo.rol === 'ADMIN'">
+                        <i class="fa-solid fa-pen-to-square fa-xl" style="color: #003694;"></i>
+                    </a>
+                </div>
+                <div class="card-body text-primary">
+                    <p class="card-text">{{exercise.instructions}}</p>
+                </div>
+            </div>
+
+            <div class="card border border-primary shadow-0 mb-3 mt-5 mb-5 p-0 col-lg-5">
+                <div class="card-header d-flex justify-content-between">
+                    <span>Musculo</span>
+                    <a href="#" @click="edit('Musculo')" v-if="clientInfo.rol === 'ADMIN'">
+                        <i class="fa-solid fa-pen-to-square fa-xl" style="color: #003694;"></i>
+                    </a>
+                </div>
+                <div class="card-body text-primary">
+                    <p class="card-text">{{exercise.muscleGroup}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!--<button class="btn btn-primary m-5 p-3" @click="edit('prueba')">Prueba</button>-->
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel1">Modificar {{ nameModal }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <template v-if="nameModal == 'Nombre'">
+                    <div class=" modal-body d-flex justify-content-center p-4">
+                        <input type="text" class="form-control" v-model="container" aria-label="Sizing input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </template>
+                <template v-else >
+                    <div class="modal-body d-flex justify-content-center">
+                        <textarea id="textoGrande" rows="4" cols="50" v-model="container"></textarea>
+                    </div>
+                </template>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" @click="saveEdit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-----ModalMuscle----->
+    <div class="modal fade" id="ModalMuscle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel2">Modificar {{ nameModal }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="d-flex justify-content-center flex-wrap row m-4">
+                        <input type="radio" class="btn-check" name="muscle" id="btn-chest" v-model="muscle" value="CHEST" :checked="muscle === 'CHEST'">
+                        <label class="btn btn-outline-success me-2 mb-2  col-3" for="btn-chest">Pecho</label>
+
+                        <input type="radio" class="btn-check" name="muscle" id="btn-back" v-model="muscle" value="BACK" :checked="muscle === 'BACK'">
+                        <label class="btn btn-outline-success me-2 mb-2 col-3" for="btn-back">Espalda</label>
+
+                        <input type="radio" class="btn-check" name="muscle" id="btn-shoulder" v-model="muscle" value="SHOULDER" :checked="muscle === 'SHOULDER'">
+                        <label class="btn btn-outline-success me-2 mb-2 col-3" for="btn-shoulder">Hombro</label>
+
+                        <input type="radio" class="btn-check" name="muscle" id="btn-biceps" v-model="muscle" value="BICEPS" :checked="muscle === 'BICEPS'">
+                        <label class="btn btn-outline-success me-2 mb-2 col-3" for="btn-biceps">Biceps</label>
+
+                        <input type="radio" class="btn-check" name="muscle" id="btn-triceps" v-model="muscle" value="TRICEPS" :checked="muscle === 'TRICEPS'">
+                        <label class="btn btn-outline-success me-2 mb-2 col-3" for="btn-triceps">Triceps</label>
+
+                        <input type="radio" class="btn-check" name="muscle" id="btn-leg" v-model="muscle" value="LEG" :checked="muscle === 'LEG'">
+                        <label class="btn btn-outline-success me-2 mb-2 col-3" for="btn-leg">Piernas</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" @click="saveEdit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------Modal 2------------>
+    <div class="modal fade" id="okModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modificar {{ nameModal }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center p-5">
+                    <template v-if="nameModal == 'Musculo' || nameModal == 'Nombre'">
+                        <span class="fs-5 fw-bold me-1">{{ nameModal }} modificado con exito!
+                            <i class="fa-solid fa-square-check fa-bounce fa-2xl" style="color: green;"></i>
+                        </span>
+                    </template>
+                    <template v-else>
+                        <span class="fs-5 fw-bold me-1">{{ nameModal }} modificada con exito!
+                            <i class="fa-solid fa-square-check fa-bounce fa-2xl" style="color: green;"></i>
+                        </span>
+                    </template>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="refreshPage">Aceptar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+<script src="js/exercise.js"></script>
+</body>
+
+</html>

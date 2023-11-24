@@ -8,7 +8,7 @@ Vue.createApp({
             dni: "",
             birthdate: "",
             phone: "",
-            gender: "none",
+            gender: "NONE",
             btnSignInActive: true,
             errorToats: null,
             errorMsg:"",
@@ -29,10 +29,18 @@ Vue.createApp({
                     }
             axios.post('/api/login', `email=${this.email}&password=${this.password}`, config)
                 .then((response) => {
+                    // Obtén el ancho de la ventana (viewport width)
+                    const widthWindow = window.innerWidth;
+
+                    // Define un umbral para determinar si es un dispositivo móvil
+                    const smartphoneWindow = 768;
+
                     if (this.email.includes("@admin.com")) {
-                      window.location.href = "/web/manager-clients.html";
-                    } else {
+                      window.location.href = "/web/manager/manager.html";
+                    } else if(widthWindow < smartphoneWindow) {
                       window.location.href = "/web/exercises.html";
+                    }else{
+                      window.location.href = "/web/forbidden.html";
                     }
                   })
                 .catch(() => {

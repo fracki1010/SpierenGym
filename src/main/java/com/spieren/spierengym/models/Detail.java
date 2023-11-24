@@ -17,9 +17,16 @@ public class Detail {
     private int series;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@OneToOne
     @JoinColumn(name = "exercise_id")
-    private Exercise exercise;
+    private Exercise exercise;*/
+
+    /*@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exercise_id")
+    private Exercise exercise;*/
+
+    @OneToMany(mappedBy = "detail", fetch = FetchType.EAGER)
+    private Set<Exercise> exercises = new HashSet<>();
 
     public Detail() {
     }
@@ -58,11 +65,16 @@ public class Detail {
         this.series = series;
     }
 
-    public Exercise getExercise() {
-        return exercise;
+    public Set<Exercise> getExercises() {
+        return exercises;
     }
 
-    public void setExercise(Exercise exercise) {
-        this.exercise = exercise;
+    public void setExercises(Set<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+
+    public void addExercise(Exercise exercise) {
+        exercise.setDetail(this);
+        this.exercises.add(exercise);
     }
 }

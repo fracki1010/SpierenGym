@@ -1,12 +1,7 @@
 package com.spieren.spierengym.dtos;
 
-import com.spieren.spierengym.models.Client;
-import com.spieren.spierengym.models.Dificulty;
-import com.spieren.spierengym.models.Exercise;
 import com.spieren.spierengym.models.Routine;
 
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +12,6 @@ public class RoutineDTO {
     private String description;
     private String creator;
     private String objective;
-    private Dificulty dificulty;
     private Set<ExerciseDTO> exercises = new HashSet<>();
 
     public RoutineDTO(Routine routine) {
@@ -26,7 +20,6 @@ public class RoutineDTO {
         this.description = routine.getDescription();
         this.creator = routine.getCreator();
         this.objective = routine.getObjective();
-        this.dificulty = routine.getDificulty();
         this.exercises = routine.getExercises()
                                     .stream()
                                     .map(exercise -> new ExerciseDTO(exercise))
@@ -51,10 +44,6 @@ public class RoutineDTO {
 
     public String getObjective() {
         return objective;
-    }
-
-    public Dificulty getDificulty() {
-        return dificulty;
     }
 
     public Set<ExerciseDTO> getExercises() {

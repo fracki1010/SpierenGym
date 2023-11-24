@@ -7,4 +7,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface RoutineRepository extends JpaRepository<Routine, Long> {
 
+    boolean existsById(Long routineId);
+    boolean existsByName(String name);
 }

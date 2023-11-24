@@ -17,6 +17,11 @@
 </head>
 
 <body>
+<style>
+  [v-cloak] {
+      display: none;
+  }
+</style>
   <div id="app">
     <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-primary">
       <ul class="navbar-nav nav-fill w-100">
@@ -27,142 +32,59 @@
           <a class="nav-link" href="/web/routine.html"><i class="fa-solid fa-dumbbell fa-2xl"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/web/ranking.html"><i class="fa-solid fa-ranking-star fa-2xl"></i></a>
+          <a class="nav-link" href="/web/rankings.html"><i class="fa-solid fa-ranking-star fa-2xl"></i></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/web/profile.html"><i class="fa-solid fa-user fa-2xl"></i></a>
         </li>
       </ul>
     </nav>
+    <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
+      <div id="danger-toast" data-bs-delay="3000" class="toast align-items-center text-white bg-danger border-0"
+           role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            {{ errorMsg }}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                  aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+
     <div class="p-3 mb-5">
-      <h3 class="position-fixed top-0 end-0 p-2 bg-primary text-white font-monospace" style="z-index: 1;">HYPERTROFIA</h3>
+      <h3 class="position-fixed top-0 end-0 p-2 bg-primary text-white font-monospace" style="z-index: 1;">{{routine.name}}</h3>
       <div class="col">
         <p class="d-flex justify-content-center mt-5">
           <span class="border-bottom mb-3 border-info ">Ejercicios de hoy</span>
+          <!--<select v-model="day">
+            <option value="MONDAY">LUNES</option>
+            <option value="TUESDAY">MARTES</option>
+            <option value="WEDNESDAY">MIERCOLES</option>
+            <option value="THURSDAY">JUEVES</option>
+            <option value="FRIDAY">VIERNES</option>
+          </select>-->
         </p>
       </div>
 
       <!-- card de Ejercicios -->
-      <div class="card exercise-font">
-        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
-          <img src="img/press-de-banca.jpg" class="img-fluid rounded-top square-image"/>
-          <a href="#!">
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-          </a>
+      <template v-for="exercise in exercises">
+        <div v-if="exercise.weekdays.includes(day)"  @click="redirectWindow(exercise.id)" class="card exercise-font">
+          <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
+            <img :src="exercise.img" class="img-fluid rounded-top square-image"/>
+            <a href="#">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+            </a>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{exercise.name}}</h5>
+            <p class="card-text">{{exercise.details.series}} SERIES || {{exercise.details.repeat}} REPETICIONES</p>
+            <p class="card-text">Peso: {{exercise.details.weight}}</p>
+            <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">Press de Banca</h5>
-          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
-          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
-        </div>
-      </div>
+      </template>
 
-      <div class="card exercise-font">
-        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
-          <img src="img/triceps-polea.jpg" class="img-fluid rounded-top square-image"/>
-          <a href="#!">
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-          </a>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Tricep Polea</h5>
-          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
-          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
-        </div>
-      </div>
-
-      <div class="card exercise-font">
-        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
-          <img src="img/press-banco-inclinado.jpg" class="img-fluid rounded-top square-image"/>
-          <a href="#!">
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-          </a>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Press Banco Inclinado</h5>
-          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
-          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
-        </div>
-      </div>
-
-
-      <div class="card exercise-font">
-        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
-          <img src="img/press-frances.jpg" class="img-fluid rounded-top square-image"/>
-          <a href="#!">
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-          </a>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Press Frances</h5>
-          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
-          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
-        </div>
-      </div>
-
-
-      <div class="card exercise-font">
-        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
-          <img src="img/peso-muerto.jpg" class="img-fluid rounded-top square-image"/>
-          <a href="#!">
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-          </a>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Peso Muerto</h5>
-          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
-          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
-        </div>
-      </div>
-
-
-      <div class="card exercise-font">
-        <div class="bg-image hover-overlay ripple rounded-top" data-mdb-ripple-color="light">
-          <img src="img/sentadilla.jpg" class="img-fluid rounded-top square-image"/>
-          <a href="#!">
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-          </a>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Sentadilla</h5>
-          <p class="card-text">4 SERIES || 12 REPETICIONES</p>
-          <!-- <a href="#!" class="btn btn-primary">Ver más</a> -->
-        </div>
-      </div>
-
-
-      <!-- <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
-        <div class="col">
-          <p class="fs-3 fw-bolder">Press de banca</p>
-        </div>
-        <div class="col ">
-          <p>4 series || 12 repeticiones</p>
-        </div>
-      </div>
-      <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
-        <div class="col">
-          <p class="fs-3 fw-bolder">Press de banca</p>
-        </div>
-        <div class="col">
-          <p>4 series || 12 repeticiones</p>
-        </div>
-      </div>
-      <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
-        <div class="col">
-          <p class="fs-3 fw-bolder">Press de banca</p>
-        </div>
-        <div class="col">
-          <p>4 series || 12 repeticiones</p>
-        </div>
-      </div>
-      <div class="col rounded rounded-3 bg-warning pt-2 ps-2 pe-2 pb-1 mb-3">
-        <div class="col">
-          <p class="fs-3 fw-bolder">Press de banca</p>
-        </div>
-        <div class="col">
-          <p>4 series || 12 repeticiones</p>
-        </div>
-      </div> -->
     </div>
 
 
