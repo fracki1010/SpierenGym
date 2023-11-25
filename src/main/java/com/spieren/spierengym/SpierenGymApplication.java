@@ -19,7 +19,7 @@ public class SpierenGymApplication {
 		SpringApplication.run(SpierenGymApplication.class, args);
 	}
 
-	@Autowired
+	/*@Autowired
 	PasswordEncoder passwordEncoder;
 
 
@@ -207,5 +207,5 @@ public class SpierenGymApplication {
 
 		};
 	}
-
+*/
 }
