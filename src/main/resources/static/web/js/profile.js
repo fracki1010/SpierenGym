@@ -38,6 +38,9 @@ Vue.createApp({
                    this.errorToats.show();
                })
        },
+       pay: function () {
+             window.location.href = 'https://mpago.la/2xuFv5d';
+       },
        prueba: function (){
             console.log(this.payments);
        }

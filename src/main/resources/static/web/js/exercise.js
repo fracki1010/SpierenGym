@@ -109,7 +109,7 @@ Vue.createApp({
                     this.errorMsg = "Sign out failed"
                     this.errorToats.show();
                 })
-        }
+        },
         formatDate: function (date) {
             return new Date(date).toLocaleDateString('en-gb');
         },

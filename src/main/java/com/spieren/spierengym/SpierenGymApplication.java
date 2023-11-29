@@ -206,6 +206,6 @@ public class SpierenGymApplication {
 			clientRepository.save(client2);
 
 		};
-	}
-*/
+	}*/
+
 }

@@ -9,10 +9,11 @@ Vue.createApp({
             birthdate: "",
             phone: "",
             gender: "NONE",
-            btnSignInActive: true,
             errorToats: null,
             errorMsg:"",
             showSignUp: false,
+            loginSuccessful: false,
+            signUpSuccessful: false
         }
     },
     created(){
@@ -21,6 +22,7 @@ Vue.createApp({
     methods:{
         //Iniciar sesion con un nuevo cliente
         logIn: function(event){
+            this.loginSuccessful = true;
             event.preventDefault();
                     let config = {
                         headers: {
@@ -29,6 +31,7 @@ Vue.createApp({
                     }
             axios.post('/api/login', `email=${this.email}&password=${this.password}`, config)
                 .then((response) => {
+
                     // Obtén el ancho de la ventana (viewport width)
                     const widthWindow = window.innerWidth;
 
@@ -46,12 +49,13 @@ Vue.createApp({
                 .catch(() => {
                     this.errorMsg = "Error en inicio de sesion, verifique la informacion"
                     this.errorToats.show();
+                    this.loginSuccessful = false;
                 })
         },
 
         //Registrar un cliente nuevo
         register: function (event) {
-                    this.btnSignInActive = false;
+                    this.signUpSuccessful = true;
                     event.preventDefault();
                     let config = {
                         headers: {
@@ -65,7 +69,7 @@ Vue.createApp({
                             this.errorToats.show();
                         })
                         .catch(error => {
-                            this.btnSignInActive = true;
+                            this.signUpSuccessful = false;
                             if (error.response && error.response.status === 403) {
                               // Acceder a la respuesta de error cuando se recibe un código 403
                               const errorResponse = error.response;

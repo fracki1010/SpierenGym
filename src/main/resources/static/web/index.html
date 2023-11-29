@@ -16,15 +16,15 @@
 <body class="d-flex justify-content-center align-items-center min-vh-100"
     style="background-image:url(img/gim_fondo.png); background-repeat: no-repeat; background-size: cover; margin: 0; padding: 0; height: 100%;">
     <div id="app">
-        <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" id="toastPlacement" style="z-index: 1000;">
             <div id="danger-toast" data-bs-delay="3000" class="toast align-items-center text-white bg-danger border-0"
-                role="alert" aria-live="assertive" aria-atomic="true">
+                 role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">
                         {{ errorMsg }}
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
+                            aria-label="Close"></button>
                 </div>
             </div>
         </div>
@@ -48,10 +48,15 @@
                         <input class="form-control bg-light" id="password" type="password" placeholder="Password"
                             v-model="password" />
                     </div>
-                    <button type="submit"
-                        class="btn btn-primary mt-4 fw-semibold shadow-sm container-fluid">Login</button>
-                    <button type="button" @click="showSignUpToogle"
-                        class="btn btn-primary mt-1 fw-semibold shadow-sm container-fluid">Register</button>
+                    <div class="text-center m-0 p-0">
+                        <button v-if="loginSuccessful" class="btn btn-primary mt-4 container-fluid" type="button">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">Loading...</span>
+                        </button>
+                        <button v-else type="submit" class="btn btn-primary mt-4 fw-semibold shadow-sm container-fluid">Login</button>
+                        <button type="button" @click="showSignUpToogle"
+                                class="btn btn-primary mt-1 fw-semibold shadow-sm container-fluid">Register</button>
+                    </div>
                 </form>
                 <!-- <div class="d-flex gap-1 justify-content-center mt-1">
                     <div>Don't have an account?</div>
@@ -126,11 +131,15 @@
                             v-model="password" />
                     </div>
 
-                    <button v-if="btnSignInActive" type="submit"
+                    <button v-if="signUpSuccessful" class="btn btn-primary mt-4 container-fluid" type="button">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="sr-only">Loading...</span>
+                    </button>
+
+                    <button v-else type="submit"
                         class="btn btn-signIn text-white container-fluid mt-4 fw-semibold shadow-sm bg-primary">Sign
                         Up</button>
-                    <button v-if="!btnSignInActive" type="submit"
-                        class="btn btn-signInDesactive text-white container-fluid mt-4 fw-semibold shadow-sm bg-primary">Verification...</button>
+
                     <button @click="showSignUpToogle"
                         class="btn btn-signIn text-white container-fluid mt-1 fw-semibold shadow-sm bg-primary">Login</button>
                     <!-- <div class="d-flex gap-1 justify-content-center mt-1">
